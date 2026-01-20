@@ -82,12 +82,27 @@ st.markdown("""
 
 if 'processing_complete' not in st.session_state:
     st.session_state.processing_complete = False
+if 'analysis_complete' not in st.session_state:
+    st.session_state.analysis_complete = False
+if 'translation_complete' not in st.session_state:
+    st.session_state.translation_complete = False
 if 'epub_bytes' not in st.session_state:
     st.session_state.epub_bytes = None
 if 'stats' not in st.session_state:
     st.session_state.stats = None
 if 'output_filename' not in st.session_state:
     st.session_state.output_filename = None
+if 'structure' not in st.session_state:
+    st.session_state.structure = None
+if 'tmp_path' not in st.session_state:
+    st.session_state.tmp_path = None
+if 'gemini_api_key' not in st.session_state:
+    # Tentar carregar do arquivo de configuração local
+    api_key_file = Path(".gemini_api_key")
+    if api_key_file.exists():
+        st.session_state.gemini_api_key = api_key_file.read_text().strip()
+    else:
+        st.session_state.gemini_api_key = ""
 
 # =============================================================================
 # Funções Auxiliares
@@ -106,32 +121,37 @@ def get_cefr_description(level: str) -> str:
     return descriptions.get(level, "")
 
 
-def process_epub(
+def save_api_key(api_key: str) -> bool:
+    """Salva a chave API em arquivo local"""
+    try:
+        api_key_file = Path(".gemini_api_key")
+        api_key_file.write_text(api_key.strip())
+        return True
+    except Exception:
+        return False
+
+
+def analyze_epub(
     uploaded_file,
     source_lang: str,
-    target_lang: str,
     user_level: str,
-    highlight_translated: bool,
-    style_type: str,
+    translation_mode: str,
     progress_callback
-) -> tuple[Optional[bytes], Optional[dict]]:
+) -> tuple[Optional[EpubStructure], Optional[dict], Optional[str]]:
     """
-    Processa o EPUB completo
+    Analisa o EPUB sem traduzir - apenas parsing e análise de dificuldade
     
     Returns:
-        Tuple[bytes do EPUB gerado, dicionário de estatísticas]
+        Tuple[estrutura do EPUB, estatísticas, caminho temporário]
     """
     stats = {
         "total_chapters": 0,
         "total_sentences": 0,
         "sentences_analyzed": 0,
-        "sentences_translated": 0,
+        "sentences_to_translate": 0,
         "sentences_kept_original": 0,
-        "processing_time": 0,
         "cefr_distribution": {}
     }
-    
-    start_time = time.time()
     
     try:
         # Salvar arquivo temporário
@@ -142,18 +162,18 @@ def process_epub(
         # =====================================================================
         # Fase 1: Parsing
         # =====================================================================
-        progress_callback(0.05, "📖 Lendo EPUB...")
+        progress_callback(0.10, "📖 Lendo EPUB...")
         
         structure = parse_epub(tmp_path)
         stats["total_chapters"] = structure.chapter_count
         stats["total_sentences"] = structure.total_sentences
         
-        progress_callback(0.15, f"✓ {structure.chapter_count} capítulos encontrados")
+        progress_callback(0.30, f"✓ {structure.chapter_count} capítulos encontrados")
         
         # =====================================================================
         # Fase 2: Análise de Dificuldade
         # =====================================================================
-        progress_callback(0.20, "🔍 Analisando dificuldade das sentenças...")
+        progress_callback(0.35, "🔍 Analisando dificuldade das sentenças...")
         
         analyzer = DifficultyAnalyzer(language=source_lang)
         user_cefr = CEFRLevel[user_level.replace("+", "_PLUS")]
@@ -165,7 +185,7 @@ def process_epub(
         level_counts = {level: 0 for level in CEFRLevel}
         
         for i, sentence in enumerate(all_sentences):
-            # Analisar sentença (passa o objeto Sentence)
+            # Analisar sentença
             analyzed = analyzer.analyze_sentence(sentence)
             sentence.difficulty = analyzed.avg_zipf
             sentence.cefr_level = analyzed.cefr_level
@@ -173,16 +193,23 @@ def process_epub(
             # Contar por nível
             level_counts[analyzed.cefr_level] = level_counts.get(analyzed.cefr_level, 0) + 1
             
-            # Verificar se deve traduzir e marcar a sentença
-            if analyzer.should_translate(analyzed, user_cefr):
+            # Verificar se deve traduzir baseado no modo selecionado
+            sentence_level = analyzed.cefr_level
+            
+            if translation_mode == 'above':
+                should_translate = sentence_level > user_cefr
+            else:
+                should_translate = sentence_level <= user_cefr
+            
+            if should_translate:
                 sentence.should_translate = True
                 sentences_to_translate.append(sentence)
             else:
                 sentence.should_translate = False
             
-            # Atualizar progresso a cada 100 sentenças
+            # Atualizar progresso
             if i % 100 == 0:
-                pct = 0.20 + (0.30 * i / len(all_sentences))
+                pct = 0.35 + (0.60 * i / len(all_sentences))
                 progress_callback(pct, f"🔍 Analisando: {i}/{len(all_sentences)} sentenças")
         
         stats["sentences_analyzed"] = len(all_sentences)
@@ -190,25 +217,52 @@ def process_epub(
         stats["sentences_kept_original"] = len(all_sentences) - len(sentences_to_translate)
         stats["cefr_distribution"] = {level.name: count for level, count in level_counts.items()}
         
-        progress_callback(0.50, f"✓ {len(sentences_to_translate)} sentenças marcadas para tradução")
+        progress_callback(1.0, "✅ Análise concluída!")
+        
+        return structure, stats, tmp_path
+        
+    except Exception as e:
+        progress_callback(0, f"❌ Erro: {str(e)}")
+        raise e
+
+
+def translate_and_generate(
+    structure: EpubStructure,
+    source_lang: str,
+    target_lang: str,
+    api_key: str,
+    highlight_translated: bool,
+    style_type: str,
+    progress_callback
+) -> tuple[Optional[bytes], Optional[dict]]:
+    """
+    Traduz as sentenças marcadas e gera o EPUB final
+    
+    Returns:
+        Tuple[bytes do EPUB, estatísticas de tradução]
+    """
+    stats = {}
+    start_time = time.time()
+    
+    try:
+        sentences_to_translate = [s for s in structure.get_all_sentences() if s.should_translate]
         
         # =====================================================================
-        # Fase 3: Tradução
+        # Fase 1: Tradução
         # =====================================================================
         if sentences_to_translate:
-            progress_callback(0.55, "🌐 Iniciando tradução com Gemini...")
+            progress_callback(0.05, "🌐 Iniciando tradução com Gemini...")
             
             engine = TranslationEngine(
+                api_key=api_key,
                 source_lang=source_lang,
                 target_lang=target_lang
             )
             
-            # Callback de progresso para tradução
             def translation_progress(progress_pct, message):
-                pct = 0.55 + (0.35 * progress_pct)
+                pct = 0.05 + (0.75 * progress_pct)
                 progress_callback(pct, f"🌐 {message}")
             
-            # Traduzir usando a estrutura (as sentenças já estão marcadas)
             translation_stats = engine.translate_structure(
                 structure=structure,
                 progress_callback=translation_progress
@@ -217,15 +271,15 @@ def process_epub(
             stats["sentences_translated"] = translation_stats.translated_sentences
             stats["translation_errors"] = translation_stats.failed_sentences
             
-            progress_callback(0.90, f"✓ {translation_stats.translated_sentences} sentenças traduzidas")
+            progress_callback(0.80, f"✓ {translation_stats.translated_sentences} sentenças traduzidas")
         else:
             stats["sentences_translated"] = 0
-            progress_callback(0.90, "ℹ️ Nenhuma sentença para traduzir")
+            progress_callback(0.80, "ℹ️ Nenhuma sentença para traduzir")
         
         # =====================================================================
-        # Fase 4: Geração do EPUB
+        # Fase 2: Geração do EPUB
         # =====================================================================
-        progress_callback(0.92, "📝 Gerando novo EPUB...")
+        progress_callback(0.85, "📝 Gerando novo EPUB...")
         
         epub_bytes = generate_epub(
             structure=structure,
@@ -235,10 +289,7 @@ def process_epub(
         
         stats["processing_time"] = time.time() - start_time
         
-        progress_callback(1.0, "✅ Processamento concluído!")
-        
-        # Limpar arquivo temporário
-        os.unlink(tmp_path)
+        progress_callback(1.0, "✅ EPUB gerado com sucesso!")
         
         return epub_bytes, stats
         
@@ -263,14 +314,48 @@ def main():
     with st.sidebar:
         st.header("⚙️ Configurações")
         
+        # =================================================================
+        # API Key Configuration
+        # =================================================================
+        st.subheader("🔑 Chave API Gemini")
+        
+        api_key_input = st.text_input(
+            "API Key",
+            value=st.session_state.gemini_api_key,
+            type="password",
+            help="Sua chave da API do Google Gemini"
+        )
+        
+        col_save, col_status = st.columns([1, 1])
+        with col_save:
+            if st.button("💾 Salvar", use_container_width=True):
+                if api_key_input:
+                    st.session_state.gemini_api_key = api_key_input
+                    if save_api_key(api_key_input):
+                        st.success("✓ Salva!")
+                    else:
+                        st.warning("Salva na sessão")
+                else:
+                    st.error("Vazia!")
+        
+        with col_status:
+            if st.session_state.gemini_api_key:
+                st.success("✓ Configurada")
+            else:
+                st.error("✗ Não configurada")
+        
+        st.divider()
+        
+        # =================================================================
         # Idiomas
+        # =================================================================
         st.subheader("🌍 Idiomas")
         
         source_lang = st.selectbox(
             "Idioma do livro (origem)",
             options=list(SUPPORTED_LANGUAGES.keys()),
             format_func=lambda x: f"{SUPPORTED_LANGUAGES[x]} ({x})",
-            index=0,  # Inglês como padrão
+            index=0,
             help="O idioma original do livro EPUB"
         )
         
@@ -278,26 +363,51 @@ def main():
             "Seu idioma nativo (destino)",
             options=list(SUPPORTED_LANGUAGES.keys()),
             format_func=lambda x: f"{SUPPORTED_LANGUAGES[x]} ({x})",
-            index=1,  # Português como padrão
-            help="O idioma para o qual as partes fáceis serão traduzidas"
+            index=1,
+            help="O idioma para o qual as sentenças selecionadas serão traduzidas"
         )
         
         if source_lang == target_lang:
             st.warning("⚠️ Idioma de origem e destino são iguais!")
         
+        # =================================================================
         # Nível CEFR
+        # =================================================================
         st.subheader("📊 Nível de Proficiência")
         
         user_level = st.select_slider(
             "Seu nível no idioma do livro",
             options=["A1", "A2", "B1", "B2", "C1", "C2+"],
             value="B1",
-            help="Sentenças abaixo deste nível serão traduzidas"
+            help="Define o ponto de corte para decidir o que traduzir"
         )
         
         st.caption(get_cefr_description(user_level))
         
+        # =================================================================
+        # Modo de tradução
+        # =================================================================
+        st.subheader("🔄 Modo de Tradução")
+        
+        translation_mode = st.radio(
+            "O que traduzir?",
+            options=["above", "below"],
+            format_func=lambda x: {
+                "above": "📈 Traduzir ACIMA do nível (difícil → seu idioma)",
+                "below": "📉 Traduzir ABAIXO do nível (fácil → seu idioma)"
+            }.get(x, x),
+            index=0,
+            help="Escolha quais sentenças serão traduzidas para seu idioma nativo"
+        )
+        
+        if translation_mode == "above":
+            st.info("💡 Sentenças difíceis serão traduzidas. Você lerá no original o que já domina.")
+        else:
+            st.info("💡 Sentenças fáceis serão traduzidas. Você será desafiado pelo vocabulário avançado.")
+        
+        # =================================================================
         # Estilização
+        # =================================================================
         st.subheader("🎨 Estilização")
         
         highlight_translated = st.checkbox(
@@ -318,20 +428,21 @@ def main():
             help="Escolha como o texto traduzido será destacado"
         )
         
+        # =================================================================
         # Informações
+        # =================================================================
         st.divider()
         st.subheader("ℹ️ Como funciona")
         st.markdown("""
         1. **Upload** do arquivo EPUB
-        2. **Análise** automática de dificuldade
-        3. **Tradução** de sentenças "fáceis" para seu idioma
+        2. **Analisar** → veja a distribuição de dificuldade
+        3. **Traduzir** → confirme e inicie a tradução
         4. **Download** do novo EPUB multi-idioma
-        
-        O objetivo é forçar você a ler no idioma que está estudando,
-        com suporte contextual nas partes mais simples.
         """)
     
+    # =========================================================================
     # Área Principal
+    # =========================================================================
     col1, col2 = st.columns([2, 1])
     
     with col1:
@@ -346,14 +457,17 @@ def main():
         if uploaded_file:
             st.success(f"✅ Arquivo carregado: **{uploaded_file.name}** ({uploaded_file.size / 1024:.1f} KB)")
             
-            # Botão de processamento
-            if st.button("🚀 Processar EPUB", type="primary", use_container_width=True):
+            # =================================================================
+            # Botão de Análise
+            # =================================================================
+            if st.button("🔍 Analisar EPUB", type="secondary", use_container_width=True):
                 # Reset estado
-                st.session_state.processing_complete = False
+                st.session_state.analysis_complete = False
+                st.session_state.translation_complete = False
                 st.session_state.epub_bytes = None
+                st.session_state.structure = None
                 st.session_state.stats = None
                 
-                # Container de progresso
                 progress_container = st.container()
                 
                 with progress_container:
@@ -365,29 +479,102 @@ def main():
                         status_text.markdown(f"**{message}**")
                     
                     try:
-                        epub_bytes, stats = process_epub(
+                        structure, stats, tmp_path = analyze_epub(
                             uploaded_file=uploaded_file,
                             source_lang=source_lang,
-                            target_lang=target_lang,
                             user_level=user_level,
-                            highlight_translated=highlight_translated,
-                            style_type=style_type if highlight_translated else "none",
+                            translation_mode=translation_mode,
                             progress_callback=update_progress
                         )
                         
                         # Salvar no estado
-                        st.session_state.processing_complete = True
-                        st.session_state.epub_bytes = epub_bytes
+                        st.session_state.analysis_complete = True
+                        st.session_state.structure = structure
                         st.session_state.stats = stats
+                        st.session_state.tmp_path = tmp_path
                         
                         # Nome do arquivo de saída
                         original_name = Path(uploaded_file.name).stem
                         st.session_state.output_filename = f"{original_name}_multilanguage.epub"
                         
+                        st.rerun()
+                        
                     except Exception as e:
-                        st.error(f"❌ Erro durante o processamento: {str(e)}")
+                        st.error(f"❌ Erro durante a análise: {str(e)}")
                         import traceback
                         st.code(traceback.format_exc())
+            
+            # =================================================================
+            # Área de Confirmação e Tradução (após análise)
+            # =================================================================
+            if st.session_state.analysis_complete and not st.session_state.translation_complete:
+                st.divider()
+                st.subheader("📋 Resumo da Análise")
+                
+                stats = st.session_state.stats
+                
+                # Mostrar resumo
+                col_r1, col_r2, col_r3 = st.columns(3)
+                with col_r1:
+                    st.metric("📚 Capítulos", stats["total_chapters"])
+                with col_r2:
+                    st.metric("📝 Sentenças", stats["total_sentences"])
+                with col_r3:
+                    pct_translate = (stats["sentences_to_translate"] / stats["total_sentences"] * 100) if stats["total_sentences"] > 0 else 0
+                    st.metric("🌐 A traduzir", f"{stats['sentences_to_translate']} ({pct_translate:.1f}%)")
+                
+                # Aviso sobre API key
+                if not st.session_state.gemini_api_key:
+                    st.error("⚠️ Configure sua chave API do Gemini na barra lateral antes de traduzir!")
+                    translate_disabled = True
+                else:
+                    translate_disabled = False
+                
+                # Botão de tradução
+                st.markdown("---")
+                if st.button(
+                    "🚀 Confirmar e Traduzir", 
+                    type="primary", 
+                    use_container_width=True,
+                    disabled=translate_disabled
+                ):
+                    progress_container = st.container()
+                    
+                    with progress_container:
+                        progress_bar = st.progress(0)
+                        status_text = st.empty()
+                        
+                        def update_progress(pct: float, message: str):
+                            progress_bar.progress(pct)
+                            status_text.markdown(f"**{message}**")
+                        
+                        try:
+                            epub_bytes, translation_stats = translate_and_generate(
+                                structure=st.session_state.structure,
+                                source_lang=source_lang,
+                                target_lang=target_lang,
+                                api_key=st.session_state.gemini_api_key,
+                                highlight_translated=highlight_translated,
+                                style_type=style_type if highlight_translated else "none",
+                                progress_callback=update_progress
+                            )
+                            
+                            # Atualizar estado
+                            st.session_state.translation_complete = True
+                            st.session_state.epub_bytes = epub_bytes
+                            st.session_state.stats.update(translation_stats)
+                            
+                            # Limpar arquivo temporário
+                            if st.session_state.tmp_path and os.path.exists(st.session_state.tmp_path):
+                                os.unlink(st.session_state.tmp_path)
+                                st.session_state.tmp_path = None
+                            
+                            st.rerun()
+                            
+                        except Exception as e:
+                            st.error(f"❌ Erro durante a tradução: {str(e)}")
+                            import traceback
+                            st.code(traceback.format_exc())
     
     with col2:
         st.header("📊 Estatísticas")
@@ -395,13 +582,21 @@ def main():
         if st.session_state.stats:
             stats = st.session_state.stats
             
+            # Status
+            if st.session_state.translation_complete:
+                st.success("✅ Tradução concluída!")
+            elif st.session_state.analysis_complete:
+                st.info("🔍 Análise concluída - aguardando confirmação")
+            
             # Métricas principais
             st.metric("📚 Capítulos", stats["total_chapters"])
             st.metric("📝 Sentenças totais", stats["total_sentences"])
             
             col_a, col_b = st.columns(2)
             with col_a:
-                st.metric("🌐 Traduzidas", stats.get("sentences_translated", 0))
+                label = "🌐 A traduzir" if not st.session_state.translation_complete else "🌐 Traduzidas"
+                value = stats.get("sentences_translated", stats.get("sentences_to_translate", 0))
+                st.metric(label, value)
             with col_b:
                 st.metric("📖 Originais", stats.get("sentences_kept_original", 0))
             
@@ -422,14 +617,16 @@ def main():
                     display_level = level.replace("_PLUS", "+")
                     st.progress(pct / 100, text=f"{display_level}: {count} ({pct:.1f}%)")
         else:
-            st.info("As estatísticas aparecerão após o processamento")
+            st.info("As estatísticas aparecerão após a análise")
     
+    # =========================================================================
     # Área de Download
-    if st.session_state.processing_complete and st.session_state.epub_bytes:
+    # =========================================================================
+    if st.session_state.translation_complete and st.session_state.epub_bytes:
         st.divider()
         
         st.markdown('<div class="success-box">', unsafe_allow_html=True)
-        st.header("✅ Processamento Concluído!")
+        st.header("✅ EPUB Pronto para Download!")
         
         col_dl1, col_dl2, col_dl3 = st.columns([1, 2, 1])
         
