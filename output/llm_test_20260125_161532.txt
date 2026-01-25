@@ -1,0 +1,70 @@
+================================================================================
+RELATÓRIO DE TESTE - LM STUDIO TRANSLATION
+================================================================================
+Data/Hora: 2026-01-25 16:15:31
+URL LM Studio: http://localhost:1234/v1
+Modelo: liquid/lfm2.5-1.2b
+Idioma origem: pt (Português)
+Idioma destino: en (English)
+
+--------------------------------------------------------------------------------
+FILTRAGEM DE SENTENÇAS PARA TESTE
+--------------------------------------------------------------------------------
+Total de sentenças marcadas no livro: 324
+Sentenças adequadas para teste (>20 chars, frases reais): 253
+Sentenças selecionadas para teste: 5
+
+[1] ID=18 | CEFR=6 | Chars=35
+    Texto: Projeto gráfico, diagramação e capa
+[2] ID=38 | CEFR=6 | Chars=36
+    Texto: Entre fadas e travesseiros travessos
+[3] ID=39 | CEFR=6 | Chars=36
+    Texto: Entre fadas e travesseiros travessos
+[4] ID=51 | CEFR=6 | Chars=114
+    Texto: Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa e vê coisas impossíveis de se...
+[5] ID=61 | CEFR=6 | Chars=41
+    Texto: E às vezes eu conseguia algo frutífero...
+
+--------------------------------------------------------------------------------
+PROMPT ENVIADO
+--------------------------------------------------------------------------------
+You are a professional translator specializing in Português to English translation.
+
+YOUR TASK: Translate EACH sentence below from Português to English.
+
+CRITICAL RULES:
+1. You MUST translate the text - do NOT return the original text
+2. Maintain the same meaning, tone and style
+3. Return ONLY the translations in this EXACT format (one per line):
+   ID: translated text
+
+Where ID is the number before each sentence.
+
+SENTENCES TO TRANSLATE:
+
+18: Projeto gráfico, diagramação e capa
+38: Entre fadas e travesseiros travessos
+39: Entre fadas e travesseiros travessos
+51: Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa e vê coisas impossíveis de serem descritas.
+61: E às vezes eu conseguia algo frutífero...
+
+Now provide the English translations:
+
+--------------------------------------------------------------------------------
+CHAMADA À API
+--------------------------------------------------------------------------------
+URL: http://localhost:1234/v1/chat/completions
+Payload (resumido):
+  model: liquid/lfm2.5-1.2b
+  temperature: 0.3
+  max_tokens: 1538
+
+Status Code: 400
+Tempo de resposta: 1.33s
+
+❌ ERRO HTTP: 400
+Resposta: {"error":"Error in iterating prediction stream: ValueError: Unsupported JSON Schema structure {\"ID\":1,\"Translation\":\"Translated\"} \nMake sure it is valid to the JSON Schema specification and check if it's supported by Outlines.\nIf it should be supported, please open an issue."}
+
+================================================================================
+FIM DO RELATÓRIO
+================================================================================

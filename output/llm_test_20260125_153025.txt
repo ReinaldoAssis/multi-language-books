@@ -1,0 +1,166 @@
+================================================================================
+RELATÓRIO DE TESTE - LM STUDIO TRANSLATION
+================================================================================
+Data/Hora: 2026-01-25 15:30:21
+URL LM Studio: http://localhost:1234/v1
+Modelo: liquid/lfm2.5-1.2b
+Idioma origem: pt (Português)
+Idioma destino: en (English)
+
+--------------------------------------------------------------------------------
+FILTRAGEM DE SENTENÇAS PARA TESTE
+--------------------------------------------------------------------------------
+Total de sentenças marcadas no livro: 324
+Sentenças adequadas para teste (>20 chars, frases reais): 253
+Sentenças selecionadas para teste: 5
+
+[1] ID=18 | CEFR=6 | Chars=35
+    Texto: Projeto gráfico, diagramação e capa
+[2] ID=38 | CEFR=6 | Chars=36
+    Texto: Entre fadas e travesseiros travessos
+[3] ID=39 | CEFR=6 | Chars=36
+    Texto: Entre fadas e travesseiros travessos
+[4] ID=51 | CEFR=6 | Chars=114
+    Texto: Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa e vê coisas impossíveis de se...
+[5] ID=61 | CEFR=6 | Chars=41
+    Texto: E às vezes eu conseguia algo frutífero...
+
+--------------------------------------------------------------------------------
+PROMPT ENVIADO
+--------------------------------------------------------------------------------
+You are a professional translator specializing in Português to English translation.
+
+YOUR TASK: Translate EACH sentence below from Português to English.
+
+CRITICAL RULES:
+1. You MUST translate the text - do NOT return the original text
+2. Maintain the same meaning, tone and style
+3. Return ONLY the translations in this EXACT format (one per line):
+   ID: translated text
+
+Where ID is the number before each sentence.
+
+SENTENCES TO TRANSLATE:
+
+18: Projeto gráfico, diagramação e capa
+38: Entre fadas e travesseiros travessos
+39: Entre fadas e travesseiros travessos
+51: Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa e vê coisas impossíveis de serem descritas.
+61: E às vezes eu conseguia algo frutífero...
+
+Now provide the English translations:
+
+--------------------------------------------------------------------------------
+CHAMADA À API
+--------------------------------------------------------------------------------
+URL: http://localhost:1234/v1/chat/completions
+Payload (resumido):
+  model: liquid/lfm2.5-1.2b
+  temperature: 0.3
+  max_tokens: 1538
+
+Status Code: 200
+Tempo de resposta: 3.65s
+
+--------------------------------------------------------------------------------
+RESPOSTA RAW DA API
+--------------------------------------------------------------------------------
+{
+  "id": "chatcmpl-e5q0sr80j4ormc5v8fl848",
+  "object": "chat.completion",
+  "created": 1769365821,
+  "model": "liquid/lfm2.5-1.2b",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "ID: 18  \nGraphic design, diagramming, and cover\n\nID: 38  \nBetween fairies and flimsy pillows\n\nID: 39  \nBetween fairies and flimsy pillows\n\nID: 51  \nIt starts to blow the wind, a cyclone comes, then the little dog Totó flies and sees things impossible to describe.\n\nID: 61  \nAnd sometimes I managed something sweet...",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 269,
+    "completion_tokens": 90,
+    "total_tokens": 359
+  },
+  "stats": {},
+  "system_fingerprint": "liquid/lfm2.5-1.2b"
+}
+
+--------------------------------------------------------------------------------
+OUTPUT DO LLM (texto extraído)
+--------------------------------------------------------------------------------
+ID: 18  
+Graphic design, diagramming, and cover
+
+ID: 38  
+Between fairies and flimsy pillows
+
+ID: 39  
+Between fairies and flimsy pillows
+
+ID: 51  
+It starts to blow the wind, a cyclone comes, then the little dog Totó flies and sees things impossible to describe.
+
+ID: 61  
+And sometimes I managed something sweet...
+
+--------------------------------------------------------------------------------
+PARSING DAS TRADUÇÕES
+--------------------------------------------------------------------------------
+✓ ID 18 (próx. linha): Graphic design, diagramming, and cover
+✓ ID 38 (próx. linha): Between fairies and flimsy pillows
+✓ ID 39 (próx. linha): Between fairies and flimsy pillows
+✓ ID 51 (próx. linha): It starts to blow the wind, a cyclone comes, then the little dog Totó ...
+✓ ID 61 (próx. linha): And sometimes I managed something sweet...
+
+Total de traduções parseadas: 5
+Esperado: 5
+✅ PARSING: Todas as traduções foram extraídas!
+
+--------------------------------------------------------------------------------
+🔍 ANÁLISE DE QUALIDADE DA TRADUÇÃO
+--------------------------------------------------------------------------------
+
+📝 Sentence ID: 18
+   Original (pt):  Projeto gráfico, diagramação e capa
+   Tradução (en): Graphic design, diagramming, and cover
+   ✅ OK: Similaridade 0% - Texto foi modificado
+
+📝 Sentence ID: 38
+   Original (pt):  Entre fadas e travesseiros travessos
+   Tradução (en): Between fairies and flimsy pillows
+   ✅ OK: Similaridade 0% - Texto foi modificado
+
+📝 Sentence ID: 39
+   Original (pt):  Entre fadas e travesseiros travessos
+   Tradução (en): Between fairies and flimsy pillows
+   ✅ OK: Similaridade 0% - Texto foi modificado
+
+📝 Sentence ID: 51
+   Original (pt):  Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa...
+   Tradução (en): It starts to blow the wind, a cyclone comes, then the little dog Totó ...
+   ✅ OK: Similaridade 6% - Texto foi modificado
+
+📝 Sentence ID: 61
+   Original (pt):  E às vezes eu conseguia algo frutífero...
+   Tradução (en): And sometimes I managed something sweet...
+   ✅ OK: Similaridade 0% - Texto foi modificado
+
+--------------------------------------------------------------------------------
+📊 RESUMO DA QUALIDADE
+--------------------------------------------------------------------------------
+Total testadas: 5
+✅ Traduções OK: 5 (100%)
+⚠️ Problemas: 0 (0%)
+
+🎉 EXCELENTE! Todas as traduções parecem válidas.
+   A LLM está traduzindo corretamente.
+
+================================================================================
+FIM DO RELATÓRIO
+================================================================================

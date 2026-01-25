@@ -1,0 +1,320 @@
+[18:13:37] ======================================================================
+[18:13:37] MULTI-LANGUAGE BOOKS - LOG DE TRADUÇÃO
+[18:13:37] ======================================================================
+[18:13:37] Arquivo de saída: O mágico de Oz_multilanguage.epub
+[18:13:37] Log salvo em: logs/translation_20260125_181337.txt
+[18:13:37] 
+[18:13:37] 🌐 Iniciando tradução com LM Studio...
+[18:13:37]    Idioma origem: pt (Português)
+[18:13:37]    Idioma destino: en (English)
+[18:13:37]    Sentenças a traduzir: 324
+[18:13:37]    Context length: 128,000 tokens
+[18:13:37] 
+[18:13:37] ✓ Conexão com LM Studio estabelecida
+[18:13:37]    Max chars por batch: 112,000
+[18:13:37] 
+[18:13:37] 📦 Iniciando processamento de batches...
+[18:13:37] 
+[18:15:11] --------------------------------------------------
+[18:15:11] 📦 BATCH 1/11
+[18:15:11]    Tempo: 93.6s
+[18:15:11]    Sentenças no batch: 30
+[18:15:11]    Traduzidas com sucesso: 30
+[18:15:11]    Status: ✓ Sucesso
+[18:15:11] 
+[18:15:11]    📝 Traduções realizadas:
+[18:15:11]       [1]
+[18:15:11]          Original:  Bárbara Prince
+[18:15:11]          Tradução:  Barbara Prince
+[18:15:11]       [3]
+[18:15:11]          Original:  Roberto Jannarelli
+[18:15:11]          Tradução:  Roberto Jannarelli
+[18:15:11]       [4]
+[18:15:11]          Original:  Victoria Rebello
+[18:15:11]          Tradução:  Victoria Rebello
+[18:15:11]       [6]
+[18:15:11]          Original:  Dafne Borges
+[18:15:11]          Tradução:  Dafne Borges
+[18:15:11]       [8]
+[18:15:11]          Original:  Mayra Medeiros
+[18:15:11]          Tradução:  Mayra Medeiros
+[18:15:11]       [9]
+[18:15:11]          Original:  Pedro Fracchetta
+[18:15:11]          Tradução:  Pedro Fracchetta
+[18:15:11]       [10]
+[18:15:11]          Original:  Gabriela Benevides
+[18:15:11]          Tradução:  Gabriela Benevides
+[18:15:11]       [12]
+[18:15:11]          Original:  Renato Ritto
+[18:15:11]          Tradução:  Renato Ritto
+[18:15:11]       [15]
+[18:15:11]          Original:  Natália Mori
+[18:15:11]          Tradução:  Natália Mori
+[18:15:11]       [18]
+[18:15:11]          Original:  Projeto gráfico, diagramação e capa
+[18:15:11]          Tradução:  Graphic design, layout and cover
+[18:15:11]       [19]
+[18:15:11]          Original:  Giovanna Cianelli
+[18:15:11]          Tradução:  Giovanna Cianelli
+[18:15:11]       [22]
+[18:15:11]          Original:  Arnaldo Baptista
+[18:15:11]          Tradução:  Arnaldo Baptista
+[18:15:11]       [23]
+[18:15:11]          Original:  Arnaldo Baptista
+[18:15:11]          Tradução:  Arnaldo Baptista
+[18:15:11]       [24]
+[18:15:11]          Original:  Janaina Tokitaka
+[18:15:11]          Tradução:  Janaina Tokitaka
+[18:15:11]       [25]
+[18:15:11]          Original:  Janaina Tokitaka
+[18:15:11]          Tradução:  Janaina Tokitaka
+[18:15:11]       [26]
+[18:15:11]          Original:  Carol Chiovatto
+[18:15:11]          Tradução:  Carol Chiovatto
+[18:15:11]       [27]
+[18:15:11]          Original:  Carol Chiovatto
+[18:15:11]          Tradução:  Carol Chiovatto
+[18:15:11]       [30]
+[18:15:11]          Original:  Daniel Lameira
+[18:15:11]          Tradução:  Daniel Lameira
+[18:15:11]       [31]
+[18:15:11]          Original:  Daniel Lameira
+[18:15:11]          Tradução:  Daniel Lameira
+[18:15:11]       [32]
+[18:15:11]          Original:  Luciana Fracchetta
+[18:15:11]          Tradução:  Luciana Fracchetta
+[18:15:11]       [33]
+[18:15:11]          Original:  Luciana Fracchetta
+[18:15:11]          Tradução:  Luciana Fracchetta
+[18:15:11]       [36]
+[18:15:11]          Original:  Sergio Drummond
+[18:15:11]          Tradução:  Rafael Drummond
+[18:15:11]       [37]
+[18:15:11]          Original:  Sergio Drummond
+[18:15:11]          Tradução:  Sergio Drummond
+[18:15:11]       [38]
+[18:15:11]          Original:  Entre fadas e travesseiros travessos
+[18:15:11]          Tradução:  Between fairies and mischievous pillows
+[18:15:11]       [39]
+[18:15:11]          Original:  Entre fadas e travesseiros travessos
+[18:15:11]          Tradução:  Between fairies and mischievous pillows
+[18:15:11]       [41]
+[18:15:11]          Original:  Arnaldo Baptista
+[18:15:11]          Tradução:  Arnaldo Baptista
+[18:15:11]       [42]
+[18:15:11]          Original:  Arnaldo Baptista
+[18:15:11]          Tradução:  Arnaldo Baptista
+[18:15:11]       [51]
+[18:15:11]          Original:  Começa a ventar o vento, vem um ciclone, depois o cachorrinh...
+[18:15:11]          Tradução:  The wind starts to blow, a cyclone comes, then the little do...
+[18:15:11]       [61]
+[18:15:11]          Original:  E às vezes eu conseguia algo frutífero...
+[18:15:11]          Tradução:  And sometimes I managed to get something fruitful...
+[18:15:11]       [63]
+[18:15:11]          Original:  O travesseiro travesso e a fada...
+[18:15:11]          Tradução:  The mischievous pillow and the fairy...
+[18:15:11] 
+[18:15:11]    ⏱️ Tempo médio por batch: 93.6s
+[18:15:11]    ⏳ Estimativa restante: 15.6 min (10 batches)
+[18:18:55] --------------------------------------------------
+[18:18:55] 📦 BATCH 2/11
+[18:18:55]    Tempo: 223.9s
+[18:18:55]    Sentenças no batch: 30
+[18:18:55]    Traduzidas com sucesso: 30
+[18:18:55]    Status: ✓ Sucesso
+[18:18:55] 
+[18:18:55]    📝 Traduções realizadas:
+[18:18:55]       [70]
+[18:18:55]          Original:  Pintar o Oz foi ozado .
+[18:18:55]          Tradução:  Painting the Oz was ozified.
+[18:18:55]       [72]
+[18:18:55]          Original:  ozado
+[18:18:55]          Tradução:  ozified
+[18:18:55]       [73]
+[18:18:55]          Original:  Arnaldo Baptista é multi-instrumentista, compositor, escrito...
+[18:18:55]          Tradução:  Arnaldo Baptista is a multi-instrumentalist, composer, write...
+[18:18:55]       [76]
+[18:18:55]          Original:  Arnaldo Baptista
+[18:18:55]          Tradução:  Arnaldo Baptista
+[18:18:55]       [82]
+[18:18:55]          Original:  Folclores, lendas, mitos e contos de fadas têm sido a grande...
+[18:18:55]          Tradução:  Folklores, legends, myths and fairy tales have been the grea...
+[18:18:55]       [83]
+[18:18:55]          Original:  As fadas aladas de Grimm e de Andersen trouxeram mais felici...
+[18:18:55]          Tradução:  Grimm's and Andersen’s winged fairies brought more happiness...
+[18:18:55]       [89]
+[18:18:55]          Original:  L. Frank Baum
+[18:18:55]          Tradução:  L. Frank Baum
+[18:18:55]       [95]
+[18:18:55]          Original:  Eram apenas quatro paredes, um chão e um teto, formando um c...
+[18:18:55]          Tradução:  It was just four walls, a floor and a ceiling, forming a sin...
+[18:18:55]       [100]
+[18:18:55]          Original:  Nenhuma árvore ou casa se destacava na imensa paisagem plana...
+[18:18:55]          Tradução:  There weren't any trees or houses standing out in the vast f...
+[18:18:55]       [111]
+[18:18:55]          Original:  Ele também era cinza, da barba comprida até as botas encardi...
+[18:18:55]          Tradução:  He was also gray, from his long beard to his worn boots; he ...
+[18:18:55]       [114]
+[18:18:55]          Original:  Totó brincava o dia inteiro, e Dorothy brincava com ele e o ...
+[18:18:55]          Tradução:  Toto was the one who brought laughter to Dorothy and saved h...
+[18:18:55]       [119]
+[18:18:55]          Original:  Do extremo Norte, eles escutaram um gemido do vento, e não d...
+[18:18:55]          Tradução:  From the North, they heard a moan of the wind, and soon Tio ...
+[18:18:55]       [124]
+[18:18:55]          Original:  E ele correu para os barracões onde as vacas e os cavalos fi...
+[18:18:55]          Tradução:  — She shouted. — Run to the cellar!
+[18:18:55]       [130]
+[18:18:55]          Original:  Totó pulou dos braços de Dorothy e se escondeu embaixo da ca...
+[18:18:55]          Tradução:  At first, Dorothy wondered if her body wouldn’t be torn to p...
+[18:18:55]       [131]
+[18:18:55]          Original:  Tia Em, terrivelmente assustada, abriu a portinhola do chão ...
+[18:18:55]          Tradução:  Tia Em, terrified, opened the floor hatch and flew down into...
+[18:18:55]       [150]
+[18:18:55]          Original:  Apesar dos sacolejos da casa e do estardalhaço do vento, Dor...
+[18:18:55]          Tradução:  Finally, Dorothy managed to drag herself to her bed by the u...
+[18:18:55]       [151]
+[18:18:55]          Original:  O encontro com os munchkins
+[18:18:55]          Tradução:  The meeting with the Munchkins
+[18:18:55]       [152]
+[18:18:55]          Original:  O encontro com os munchkins
+[18:18:55]          Tradução:  Dorothy was awakened by a sudden and violent impact that, if...
+[18:18:55]       [154]
+[18:18:55]          Original:  O solavanco a fez recuperar o fôlego e se perguntar o que ti...
+[18:18:55]          Tradução:  The jolt made her regain her breath and wonder what had happ...
+[18:18:55]       [156]
+[18:18:55]          Original:  Ela pulou da cama e, com Totó nos calcanhares, correu e abri...
+[18:18:55]          Tradução:  Dorothy then sat up and realized that the house wasn’t movin...
+[18:18:55]       [159]
+[18:18:55]          Original:  Gramados adoráveis se espalhavam por todos os lados, com árv...
+[18:18:55]          Tradução:  Lovely lawns spread everywhere, with majestic trees displayi...
+[18:18:55]       [160]
+[18:18:55]          Original:  Canteiros de flores deslumbrantes se erguiam por todos os la...
+[18:18:55]          Tradução:  Spectacular flowerbeds rose on all sides, and rare and lumin...
+[18:18:55]       [161]
+[18:18:55]          Original:  Um pouco mais distante, corria um pequeno riacho que dançava...
+[18:18:55]          Tradução:  A little further on, a small stream danced and sparkled thro...
+[18:18:55]       [166]
+[18:18:55]          Original:  Usavam chapéus redondos que se erguiam a mais de um palmo de...
+[18:18:55]          Tradução:  The men also wore blue, in the same shade as their hats, and...
+[18:18:55]       [175]
+[18:18:55]          Original:  Dorothy escutou aquele discurso com perplexidade.
+[18:18:55]          Tradução:  — You can still see her two feet jumping out from under the ...
+[18:18:55]       [186]
+[18:18:55]          Original:  Ali, de fato, debaixo da grande viga que sustentava a casa, ...
+[18:18:55]          Tradução:  There, indeed, under the large beam supporting the house, ap...
+[18:18:55]       [189]
+[18:18:55]          Original:  — berrou Dorothy, juntando as mãos em desespero.
+[18:18:55]          Tradução:  — My God!”}, {
+[18:18:55]       [199]
+[18:18:55]          Original:  — indagou Dorothy.
+[18:18:55]          Tradução:  — indagou Dorothy.
+[18:18:55]       [207]
+[18:18:55]          Original:  — suspirou Dorothy.
+[18:18:55]          Tradução:  — suspirou Dorothy.
+[18:18:55]       [219]
+[18:18:55]          Original:  — indagou a senhorinha.
+[18:18:55]          Tradução:  — indagou a senhorinha.
+[18:18:55] 
+[18:18:55]    ⏱️ Tempo médio por batch: 158.8s
+[18:18:55]    ⏳ Estimativa restante: 23.8 min (9 batches)
+[18:21:53] --------------------------------------------------
+[18:21:53] 📦 BATCH 3/11
+[18:21:53]    Tempo: 177.7s
+[18:21:53]    Sentenças no batch: 30
+[18:21:53]    Traduzidas com sucesso: 30
+[18:21:53]    Status: ✓ Sucesso
+[18:21:53] 
+[18:21:53]    📝 Traduções realizadas:
+[18:21:53]       [242]
+[18:21:53]          Original:  A bruxa se abaixou, pegou os sapatos e, depois de espanar a ...
+[18:21:53]          Tradução:  A bruxa se abaixou, pegou os sapatos e, depois de espanar a ...
+[18:21:53]       [249]
+[18:21:53]          Original:  Os munchkins e a bruxa primeiro se olharam, em seguida encar...
+[18:21:53]          Tradução:  Os munchkins e a bruxa primeiro se olharam, em seguida encar...
+[18:21:53]       [258]
+[18:21:53]          Original:  Suas lágrimas aparentemente provocaram uma certa consternaçã...
+[18:21:53]          Tradução:  Suas lágrimas aparentemente provocaram uma certa consternaçã...
+[18:21:53]       [269]
+[18:21:53]          Original:  — interrogou a menina, ansiosa.
+[18:21:53]          Tradução:  — interrogou a menina, ansiosa.
+[18:21:53]       [286]
+[18:21:53]          Original:  A bruxa dirigiu a Dorothy um aceno carinhoso com a cabeça, d...
+[18:21:53]          Tradução:  A bruxa dirigiu a Dorothy um aceno carinhoso com a cabeça, d...
+[18:21:53]       [293]
+[18:21:53]          Original:  Totó logo correu na direção das árvores e saiu latindo para ...
+[18:21:53]          Tradução:  Totó logo correu na direção das árvores e saiu latindo para ...
+[18:21:53]       [305]
+[18:21:53]          Original:  — ela perguntou a Totó.
+[18:21:53]          Tradução:  — ela perguntou a Totó.
+[18:21:53]       [314]
+[18:21:53]          Original:  Em pouco tempo, Dorothy já cami nhava animada rumo à Cidade ...
+[18:21:53]          Tradução:  Em pouco tempo, Dorothy já cami nhava animada rumo à Cidade ...
+[18:21:53]       [317]
+[18:21:53]          Original:  Havia cercas caprichadas de ambos os lados da estrada, pinta...
+[18:21:53]          Tradução:  Havia cercas caprichadas de ambos os lados da estrada, pinta...
+[18:21:53]       [318]
+[18:21:53]          Original:  Sem dúvida nenhuma, os munchkins eram ótimos fazendeiros e c...
+[18:21:53]          Tradução:  Sem dúvida nenhuma, os munchkins eram ótimos fazendeiros e c...
+[18:21:53]       [320]
+[18:21:53]          Original:  As casas dos munchkins tinham uma aparência curiosa: eram re...
+[18:21:53]          Tradução:  As casas dos munchkins tinham uma aparência curiosa: eram re...
+[18:21:53]       [324]
+[18:21:53]          Original:  Cinco violinistas tocavam o mais alto possível, e a multidão...
+[18:21:53]          Tradução:  Cinco violinistas tocavam o mais alto possível, e a multidão...
+[18:21:53]       [327]
+[18:21:53]          Original:  Depois se sentou em um banquinho e observou as pessoas dança...
+[18:21:53]          Tradução:  Depois se sentou em um banquinho e observou as pessoas dança...
+[18:21:53]       [328]
+[18:21:53]          Original:  Quando Boq viu os sapatos prateados nos pés de Dorothy, ele ...
+[18:21:53]          Tradução:  Quando Boq viu os sapatos prateados nos pés de Dorothy, ele ...
+[18:21:53]       [331]
+[18:21:53]          Original:  — a menina retrucou.
+[18:21:53]          Tradução:  — a menina retrucou.
+[18:21:53]       [334]
+[18:21:53]          Original:  — Meu vestido é azul, só tem quadradinhos brancos — disse Do...
+[18:21:53]          Tradução:  — Meu vestido é azul, só tem quadradinhos brancos — disse Do...
+[18:21:53]       [340]
+[18:21:53]          Original:  Ela tomou um café da manhã delicioso e passou um tempo admir...
+[18:21:53]          Tradução:  Ela tomou um café da manhã delicioso e passou um tempo admir...
+[18:21:53]       [353]
+[18:21:53]          Original:  Dorothy apoiou o queixo em uma das mãos e observou o espanta...
+[18:21:53]          Tradução:  Dorothy apoiou o queixo em uma das mãos e observou o espanta...
+[18:21:53]       [355]
+[18:21:53]          Original:  Um chapéu azul velho e pontudo, que pertencera a algum munch...
+[18:21:53]          Tradução:  Um chapéu azul velho e pontudo, que pertencera a algum munch...
+[18:21:53]       [356]
+[18:21:53]          Original:  Nos pés ele calçava botas surradas com detalhes em azul, com...
+[18:21:53]          Tradução:  Nos pés ele calçava botas surradas com detalhes em azul, com...
+[18:21:53]       [357]
+[18:21:53]          Original:  E, enquanto Dorothy analisava muito atenta aquele rosto esqu...
+[18:21:53]          Tradução:  E, enquanto Dorothy analisava muito atenta aquele rosto esqu...
+[18:21:53]       [359]
+[18:21:53]          Original:  Dorothy desceu da cerca e foi até o espantalho enquanto Totó...
+[18:21:53]          Tradução:  Dorothy desceu da cerca e foi até o espantalho enquanto Totó...
+[18:21:53]       [362]
+[18:21:53]          Original:  — perguntou a menina, maravilhada.
+[18:21:53]          Tradução:  — perguntou a menina, maravilhada.
+[18:21:53]       [379]
+[18:21:53]          Original:  — perguntou o Espantalho, depois de se alongar e bocejar.
+[18:21:53]          Tradução:  — perguntou o Espantalho, depois de se alongar e bocejar.
+[18:21:53]       [386]
+[18:21:53]          Original:  — Dorothy retrucou, muito surpresa.
+[18:21:53]          Tradução:  — Dorothy retrucou, muito surpresa.
+[18:21:53]       [419]
+[18:21:53]          Original:  — Um fósforo aceso.
+[18:21:53]          Tradução:  — Um fósforo aceso.
+[18:21:53]       [424]
+[18:21:53]          Original:  O Espantalho, não tendo cérebro, seguia em frente, pisava no...
+[18:21:53]          Tradução:  O Espantalho, não tendo cérebro, seguia em frente, pisava no...
+[18:21:53]       [425]
+[18:21:53]          Original:  As quedas, no entanto, não o machucavam, e Dorothy pegava o ...
+[18:21:53]          Tradução:  As quedas, no entanto, não o machucavam, e Dorothy pegava o ...
+[18:21:53]       [440]
+[18:21:53]          Original:  O Espantalho suspirou.
+[18:21:53]          Tradução:  O Espantalho suspirou.
+[18:21:53]       [445]
+[18:21:53]          Original:  — a menina indagou.
+[18:21:53]          Tradução:  — a menina indagou.
+[18:21:53] 
+[18:21:53]    ⏱️ Tempo médio por batch: 165.1s
+[18:21:53]    ⏳ Estimativa restante: 22.0 min (8 batches)

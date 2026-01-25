@@ -1,0 +1,147 @@
+================================================================================
+RELATÓRIO DE TESTE - LM STUDIO TRANSLATION
+================================================================================
+Data/Hora: 2026-01-25 17:03:49
+URL LM Studio: http://localhost:1234/v1
+Modelo: liquid/lfm2.5-1.2b
+Idioma origem: pt (Português)
+Idioma destino: en (English)
+
+--------------------------------------------------------------------------------
+FILTRAGEM DE SENTENÇAS PARA TESTE
+--------------------------------------------------------------------------------
+Total de sentenças marcadas no livro: 324
+Sentenças adequadas para teste (>20 chars, frases reais): 253
+Sentenças selecionadas para teste: 5
+
+[1] ID=18 | CEFR=6 | Chars=35
+    Texto: Projeto gráfico, diagramação e capa
+[2] ID=38 | CEFR=6 | Chars=36
+    Texto: Entre fadas e travesseiros travessos
+[3] ID=39 | CEFR=6 | Chars=36
+    Texto: Entre fadas e travesseiros travessos
+[4] ID=51 | CEFR=6 | Chars=114
+    Texto: Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa e vê coisas impossíveis de se...
+[5] ID=61 | CEFR=6 | Chars=41
+    Texto: E às vezes eu conseguia algo frutífero...
+
+--------------------------------------------------------------------------------
+PROMPT ENVIADO
+--------------------------------------------------------------------------------
+Translate these sentences from Português to English.
+You MUST translate - do NOT return the original text.
+
+ID 18: Projeto gráfico, diagramação e capa
+ID 38: Entre fadas e travesseiros travessos
+ID 39: Entre fadas e travesseiros travessos
+ID 51: Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa e vê coisas impossíveis de serem descritas.
+ID 61: E às vezes eu conseguia algo frutífero...
+
+--------------------------------------------------------------------------------
+CHAMADA À API (JSON Structured Output)
+--------------------------------------------------------------------------------
+URL: http://localhost:1234/v1/chat/completions
+Payload (resumido):
+  model: liquid/lfm2.5-1.2b
+  temperature: 0.3
+  max_tokens: 818
+
+Status Code: 200
+Tempo de resposta: 1.78s
+
+--------------------------------------------------------------------------------
+RESPOSTA RAW DA API
+--------------------------------------------------------------------------------
+{
+  "id": "chatcmpl-bo5uprk1vkcbbo2z4efppe",
+  "object": "chat.completion",
+  "created": 1769371429,
+  "model": "liquid/lfm2.5-1.2b",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{ \"translations\": [  ] }",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 175,
+    "completion_tokens": 11,
+    "total_tokens": 186
+  },
+  "stats": {},
+  "system_fingerprint": "liquid/lfm2.5-1.2b"
+}
+
+--------------------------------------------------------------------------------
+OUTPUT DO LLM (JSON)
+--------------------------------------------------------------------------------
+{ "translations": [  ] }
+
+--------------------------------------------------------------------------------
+PARSING DAS TRADUÇÕES (JSON)
+--------------------------------------------------------------------------------
+
+✅ JSON parseado com sucesso!
+
+Total de traduções parseadas: 0
+Esperado: 5
+❌ PARSING FALHOU: Nenhuma tradução foi parseada
+
+--------------------------------------------------------------------------------
+🔍 ANÁLISE DE QUALIDADE DA TRADUÇÃO
+--------------------------------------------------------------------------------
+
+📝 Sentence ID: 18
+   Original (pt):  Projeto gráfico, diagramação e capa
+   Tradução (en): ❌ NÃO ENCONTRADA
+
+📝 Sentence ID: 38
+   Original (pt):  Entre fadas e travesseiros travessos
+   Tradução (en): ❌ NÃO ENCONTRADA
+
+📝 Sentence ID: 39
+   Original (pt):  Entre fadas e travesseiros travessos
+   Tradução (en): ❌ NÃO ENCONTRADA
+
+📝 Sentence ID: 51
+   Original (pt):  Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa...
+   Tradução (en): ❌ NÃO ENCONTRADA
+
+📝 Sentence ID: 61
+   Original (pt):  E às vezes eu conseguia algo frutífero...
+   Tradução (en): ❌ NÃO ENCONTRADA
+
+--------------------------------------------------------------------------------
+📊 RESUMO DA QUALIDADE
+--------------------------------------------------------------------------------
+Total testadas: 5
+✅ Traduções OK: 0 (0%)
+⚠️ Problemas: 5 (100%)
+
+❌ CRÍTICO! Nenhuma tradução válida detectada.
+   POSSÍVEIS CAUSAS:
+   1. O modelo não suporta bem o par de idiomas
+   2. O modelo é muito pequeno para tradução
+   3. O prompt precisa de ajustes para este modelo
+
+   RECOMENDAÇÕES:
+   - Tente um modelo maior (7B+ parâmetros)
+   - Use um modelo treinado para tradução
+   - Considere usar a API do Gemini
+
+Problemas encontrados:
+   - ID 18: Tradução não retornada
+   - ID 38: Tradução não retornada
+   - ID 39: Tradução não retornada
+   - ID 51: Tradução não retornada
+   - ID 61: Tradução não retornada
+
+================================================================================
+FIM DO RELATÓRIO
+================================================================================

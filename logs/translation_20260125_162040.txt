@@ -1,0 +1,26 @@
+[16:20:40] ======================================================================
+[16:20:40] MULTI-LANGUAGE BOOKS - LOG DE TRADUÇÃO
+[16:20:40] ======================================================================
+[16:20:40] Arquivo de saída: O mágico de Oz_multilanguage.epub
+[16:20:40] Log salvo em: logs/translation_20260125_162040.txt
+[16:20:40] 
+[16:20:40] 🌐 Iniciando tradução com LM Studio...
+[16:20:40]    Idioma origem: pt (Português)
+[16:20:40]    Idioma destino: en (English)
+[16:20:40]    Sentenças a traduzir: 324
+[16:20:40]    Context length: 32,000 tokens
+[16:20:40] 
+[16:20:40] ✓ Conexão com LM Studio estabelecida
+[16:20:40]    Max chars por batch: 44,800
+[16:20:40] 
+[16:20:40] 📦 Iniciando processamento de batches...
+[16:20:40] 
+[16:26:46] --------------------------------------------------
+[16:26:46] 📦 BATCH 1/4
+[16:26:46]    Tempo: 366.1s
+[16:26:46]    Sentenças no batch: 114
+[16:26:46]    Traduzidas com sucesso: 0
+[16:26:46]    Status: ✗ Falha - Falha após 3 tentativas: HTTPConnectionPool(host='localhost', port=1234): Read timed out. (read timeout=120)
+[16:26:46] 
+[16:26:46]    ⏱️ Tempo médio por batch: 366.1s
+[16:26:46]    ⏳ Estimativa restante: 18.3 min (3 batches)
