@@ -1,0 +1,165 @@
+================================================================================
+RELATÓRIO DE TESTE - LM STUDIO TRANSLATION
+================================================================================
+Data/Hora: 2026-01-25 20:29:51
+URL LM Studio: http://localhost:1234/v1
+Modelo: qwen3-vl-2b-instruct-mlx
+Idioma origem: pt (Português)
+Idioma destino: en (English)
+
+--------------------------------------------------------------------------------
+FILTRAGEM DE SENTENÇAS PARA TESTE
+--------------------------------------------------------------------------------
+Total de sentenças marcadas no livro: 324
+Sentenças adequadas para teste (>20 chars, frases reais): 253
+Sentenças selecionadas para teste: 5
+
+[1] ID=18 | CEFR=6 | Chars=35
+    Texto: Projeto gráfico, diagramação e capa
+[2] ID=38 | CEFR=6 | Chars=36
+    Texto: Entre fadas e travesseiros travessos
+[3] ID=39 | CEFR=6 | Chars=36
+    Texto: Entre fadas e travesseiros travessos
+[4] ID=51 | CEFR=6 | Chars=114
+    Texto: Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa e vê coisas impossíveis de se...
+[5] ID=61 | CEFR=6 | Chars=41
+    Texto: E às vezes eu conseguia algo frutífero...
+
+--------------------------------------------------------------------------------
+PROMPT ENVIADO
+--------------------------------------------------------------------------------
+Translate these sentences from Português to English.
+You MUST translate - do NOT return the original text.
+
+ID 18: Projeto gráfico, diagramação e capa
+ID 38: Entre fadas e travesseiros travessos
+ID 39: Entre fadas e travesseiros travessos
+ID 51: Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa e vê coisas impossíveis de serem descritas.
+ID 61: E às vezes eu conseguia algo frutífero...
+
+--------------------------------------------------------------------------------
+CHAMADA À API (JSON Structured Output)
+--------------------------------------------------------------------------------
+URL: http://localhost:1234/v1/chat/completions
+Payload (resumido):
+  model: qwen3-vl-2b-instruct-mlx
+  temperature: 0.3
+  max_tokens: 818
+
+Status Code: 200
+Tempo de resposta: 24.34s
+
+--------------------------------------------------------------------------------
+RESPOSTA RAW DA API
+--------------------------------------------------------------------------------
+{
+  "id": "chatcmpl-uxtptkvvdsh480jfx0p4t",
+  "object": "chat.completion",
+  "created": 1769383792,
+  "model": "qwen3-vl-2b-instruct-mlx",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{ \"translations\": [ { \"id\": 18, \"text\": \"Graphic design, layout and cover\" }, { \"id\": 38, \"text\": \"Between fairies and crooked mattresses\" }, { \"id\": 39, \"text\": \"Between fairies and crooked mattresses\" }, { \"id\": 51, \"text\": \"It begins to blow the wind, a cyclone comes, then Totó the dog flies and sees things impossible to describe.\" }, { \"id\": 61, \"text\": \"And sometimes I could get something fruitful...\" } ] }",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 174,
+    "completion_tokens": 130,
+    "total_tokens": 304
+  },
+  "stats": {},
+  "system_fingerprint": "qwen3-vl-2b-instruct-mlx"
+}
+
+--------------------------------------------------------------------------------
+OUTPUT DO LLM (JSON)
+--------------------------------------------------------------------------------
+{ "translations": [ { "id": 18, "text": "Graphic design, layout and cover" }, { "id": 38, "text": "Between fairies and crooked mattresses" }, { "id": 39, "text": "Between fairies and crooked mattresses" }, { "id": 51, "text": "It begins to blow the wind, a cyclone comes, then Totó the dog flies and sees things impossible to describe." }, { "id": 61, "text": "And sometimes I could get something fruitful..." } ] }
+
+--------------------------------------------------------------------------------
+PARSING DAS TRADUÇÕES (JSON)
+--------------------------------------------------------------------------------
+✓ ID 18: Graphic design, layout and cover
+✓ ID 38: Between fairies and crooked mattresses
+✓ ID 39: Between fairies and crooked mattresses
+✓ ID 51: It begins to blow the wind, a cyclone comes, then Totó the dog flies a...
+✓ ID 61: And sometimes I could get something fruitful...
+
+✅ JSON parseado com sucesso!
+
+Total de traduções parseadas: 5
+Esperado: 5
+✅ PARSING: Todas as traduções foram extraídas!
+
+--------------------------------------------------------------------------------
+🔍 ANÁLISE DE QUALIDADE DA TRADUÇÃO
+--------------------------------------------------------------------------------
+
+📝 Sentence ID: 18
+   Original (pt):  Projeto gráfico, diagramação e capa
+   Tradução (en): Graphic design, layout and cover
+   ✅ OK: Similaridade 0% - Texto foi modificado
+
+📝 Sentence ID: 38
+   Original (pt):  Entre fadas e travesseiros travessos
+   Tradução (en): Between fairies and crooked mattresses
+   ✅ OK: Similaridade 0% - Texto foi modificado
+
+📝 Sentence ID: 39
+   Original (pt):  Entre fadas e travesseiros travessos
+   Tradução (en): Between fairies and crooked mattresses
+   ✅ OK: Similaridade 0% - Texto foi modificado
+
+📝 Sentence ID: 51
+   Original (pt):  Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa...
+   Tradução (en): It begins to blow the wind, a cyclone comes, then Totó the dog flies a...
+   ✅ OK: Similaridade 6% - Texto foi modificado
+
+📝 Sentence ID: 61
+   Original (pt):  E às vezes eu conseguia algo frutífero...
+   Tradução (en): And sometimes I could get something fruitful...
+   ✅ OK: Similaridade 0% - Texto foi modificado
+
+--------------------------------------------------------------------------------
+📊 RESUMO DA QUALIDADE
+--------------------------------------------------------------------------------
+Total testadas: 5
+✅ Traduções OK: 5 (100%)
+⚠️ Problemas: 0 (0%)
+
+🎉 EXCELENTE! Todas as traduções parecem válidas.
+   A LLM está traduzindo corretamente.
+
+--------------------------------------------------------------------------------
+⏱️ ESTIMATIVA DE TEMPO PARA TRADUÇÃO COMPLETA
+--------------------------------------------------------------------------------
+📊 Métricas do teste:
+   Sentenças testadas: 5
+   Tokens de prompt: 174
+   Tokens de resposta: 130
+   Tokens totais: 304
+   Tempo de resposta: 24.34s
+   Velocidade: 12.5 tokens/s
+
+📖 Dados do livro completo:
+   Total de sentenças a traduzir: 324
+   Total de caracteres: 29,104
+   Tokens estimados: 19,699
+
+⏱️ Tempo estimado para tradução completa:
+   🕐 26.3 minutos (1577 segundos)
+
+   ⚠️ Esta é uma estimativa aproximada.
+   O tempo real pode variar dependendo do tamanho dos batches,
+   carga do sistema e complexidade do texto.
+
+================================================================================
+FIM DO RELATÓRIO
+================================================================================

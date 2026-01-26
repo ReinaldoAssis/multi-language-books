@@ -1,0 +1,165 @@
+================================================================================
+RELATÓRIO DE TESTE - LM STUDIO TRANSLATION
+================================================================================
+Data/Hora: 2026-01-25 20:45:49
+URL LM Studio: http://localhost:1234/v1
+Modelo: qwen3-vl-2b-instruct-mlx
+Idioma origem: en (English)
+Idioma destino: pt (Português)
+
+--------------------------------------------------------------------------------
+FILTRAGEM DE SENTENÇAS PARA TESTE
+--------------------------------------------------------------------------------
+Total de sentenças marcadas no livro: 4198
+Sentenças adequadas para teste (>20 chars, frases reais): 3475
+Sentenças selecionadas para teste: 5
+
+[1] ID=0 | CEFR=5 | Chars=39
+    Texto: Powerless text © 2023 by Lauren Roberts
+[2] ID=1 | CEFR=5 | Chars=25
+    Texto: Map © 2023 Lauren Roberts
+[3] ID=2 | CEFR=5 | Chars=27
+    Texto: Cover © 2023 Lauren Roberts
+[4] ID=3 | CEFR=6 | Chars=33
+    Texto: Cover designed by Seventhstar Art
+[5] ID=5 | CEFR=6 | Chars=39
+    Texto: Formatted by Whimsy Book Cover Graphics
+
+--------------------------------------------------------------------------------
+PROMPT ENVIADO
+--------------------------------------------------------------------------------
+Translate these sentences from English to Português.
+You MUST translate - do NOT return the original text.
+
+ID 0: Powerless text © 2023 by Lauren Roberts
+ID 1: Map © 2023 Lauren Roberts
+ID 2: Cover © 2023 Lauren Roberts
+ID 3: Cover designed by Seventhstar Art
+ID 5: Formatted by Whimsy Book Cover Graphics
+
+--------------------------------------------------------------------------------
+CHAMADA À API (JSON Structured Output)
+--------------------------------------------------------------------------------
+URL: http://localhost:1234/v1/chat/completions
+Payload (resumido):
+  model: qwen3-vl-2b-instruct-mlx
+  temperature: 0.3
+  max_tokens: 610
+
+Status Code: 200
+Tempo de resposta: 14.62s
+
+--------------------------------------------------------------------------------
+RESPOSTA RAW DA API
+--------------------------------------------------------------------------------
+{
+  "id": "chatcmpl-woj0vbuj13s5c5j74tadk3",
+  "object": "chat.completion",
+  "created": 1769384749,
+  "model": "qwen3-vl-2b-instruct-mlx",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{ \"translations\": [ { \"id\": 0, \"text\": \"Texto sem poder © 2023 por Lauren Roberts\" }, { \"id\": 1, \"text\": \"Mapa © 2023 por Lauren Roberts\" }, { \"id\": 2, \"text\": \"Capa © 2023 por Lauren Roberts\" }, { \"id\": 3, \"text\": \"Capa desenhada por Seventhstar Art\" }, { \"id\": 5, \"text\": \"Formatado por Whimsy Book Cover Graphics\" } ] }",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 132,
+    "completion_tokens": 126,
+    "total_tokens": 258
+  },
+  "stats": {},
+  "system_fingerprint": "qwen3-vl-2b-instruct-mlx"
+}
+
+--------------------------------------------------------------------------------
+OUTPUT DO LLM (JSON)
+--------------------------------------------------------------------------------
+{ "translations": [ { "id": 0, "text": "Texto sem poder © 2023 por Lauren Roberts" }, { "id": 1, "text": "Mapa © 2023 por Lauren Roberts" }, { "id": 2, "text": "Capa © 2023 por Lauren Roberts" }, { "id": 3, "text": "Capa desenhada por Seventhstar Art" }, { "id": 5, "text": "Formatado por Whimsy Book Cover Graphics" } ] }
+
+--------------------------------------------------------------------------------
+PARSING DAS TRADUÇÕES (JSON)
+--------------------------------------------------------------------------------
+✓ ID 0: Texto sem poder © 2023 por Lauren Roberts
+✓ ID 1: Mapa © 2023 por Lauren Roberts
+✓ ID 2: Capa © 2023 por Lauren Roberts
+✓ ID 3: Capa desenhada por Seventhstar Art
+✓ ID 5: Formatado por Whimsy Book Cover Graphics
+
+✅ JSON parseado com sucesso!
+
+Total de traduções parseadas: 5
+Esperado: 5
+✅ PARSING: Todas as traduções foram extraídas!
+
+--------------------------------------------------------------------------------
+🔍 ANÁLISE DE QUALIDADE DA TRADUÇÃO
+--------------------------------------------------------------------------------
+
+📝 Sentence ID: 0
+   Original (en):  Powerless text © 2023 by Lauren Roberts
+   Tradução (pt): Texto sem poder © 2023 por Lauren Roberts
+   ✅ OK: Similaridade 36% - Texto foi modificado
+
+📝 Sentence ID: 1
+   Original (en):  Map © 2023 Lauren Roberts
+   Tradução (pt): Mapa © 2023 por Lauren Roberts
+   ✅ OK: Similaridade 57% - Texto foi modificado
+
+📝 Sentence ID: 2
+   Original (en):  Cover © 2023 Lauren Roberts
+   Tradução (pt): Capa © 2023 por Lauren Roberts
+   ✅ OK: Similaridade 57% - Texto foi modificado
+
+📝 Sentence ID: 3
+   Original (en):  Cover designed by Seventhstar Art
+   Tradução (pt): Capa desenhada por Seventhstar Art
+   ✅ OK: Similaridade 25% - Texto foi modificado
+
+📝 Sentence ID: 5
+   Original (en):  Formatted by Whimsy Book Cover Graphics
+   Tradução (pt): Formatado por Whimsy Book Cover Graphics
+   ✅ OK: Similaridade 50% - Texto foi modificado
+
+--------------------------------------------------------------------------------
+📊 RESUMO DA QUALIDADE
+--------------------------------------------------------------------------------
+Total testadas: 5
+✅ Traduções OK: 5 (100%)
+⚠️ Problemas: 0 (0%)
+
+🎉 EXCELENTE! Todas as traduções parecem válidas.
+   A LLM está traduzindo corretamente.
+
+--------------------------------------------------------------------------------
+⏱️ ESTIMATIVA DE TEMPO PARA TRADUÇÃO COMPLETA
+--------------------------------------------------------------------------------
+📊 Métricas do teste:
+   Sentenças testadas: 5
+   Tokens de prompt: 132
+   Tokens de resposta: 126
+   Tokens totais: 258
+   Tempo de resposta: 14.62s
+   Velocidade: 17.6 tokens/s
+
+📖 Dados do livro completo:
+   Total de sentenças a traduzir: 4,198
+   Total de caracteres: 309,079
+   Tokens estimados: 216,617
+
+⏱️ Tempo estimado para tradução completa:
+   🕐 3.4 horas (205 minutos)
+
+   ⚠️ Esta é uma estimativa aproximada.
+   O tempo real pode variar dependendo do tamanho dos batches,
+   carga do sistema e complexidade do texto.
+
+================================================================================
+FIM DO RELATÓRIO
+================================================================================

@@ -1,0 +1,57 @@
+================================================================================
+RELATÓRIO DE TESTE - LM STUDIO TRANSLATION
+================================================================================
+Data/Hora: 2026-01-25 20:35:16
+URL LM Studio: http://localhost:1234/v1
+Modelo: qwen3-vl-2b-instruct-mlx
+Idioma origem: pt (Português)
+Idioma destino: en (English)
+
+--------------------------------------------------------------------------------
+FILTRAGEM DE SENTENÇAS PARA TESTE
+--------------------------------------------------------------------------------
+Total de sentenças marcadas no livro: 324
+Sentenças adequadas para teste (>20 chars, frases reais): 253
+Sentenças selecionadas para teste: 5
+
+[1] ID=18 | CEFR=6 | Chars=35
+    Texto: Projeto gráfico, diagramação e capa
+[2] ID=38 | CEFR=6 | Chars=36
+    Texto: Entre fadas e travesseiros travessos
+[3] ID=39 | CEFR=6 | Chars=36
+    Texto: Entre fadas e travesseiros travessos
+[4] ID=51 | CEFR=6 | Chars=114
+    Texto: Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa e vê coisas impossíveis de se...
+[5] ID=61 | CEFR=6 | Chars=41
+    Texto: E às vezes eu conseguia algo frutífero...
+
+--------------------------------------------------------------------------------
+PROMPT ENVIADO
+--------------------------------------------------------------------------------
+Translate these sentences from Português to English.
+You MUST translate - do NOT return the original text.
+
+ID 18: Projeto gráfico, diagramação e capa
+ID 38: Entre fadas e travesseiros travessos
+ID 39: Entre fadas e travesseiros travessos
+ID 51: Começa a ventar o vento, vem um ciclone, depois o cachorrinho Totó voa e vê coisas impossíveis de serem descritas.
+ID 61: E às vezes eu conseguia algo frutífero...
+
+--------------------------------------------------------------------------------
+CHAMADA À API (JSON Structured Output)
+--------------------------------------------------------------------------------
+URL: http://localhost:1234/v1/chat/completions
+Payload (resumido):
+  model: qwen3-vl-2b-instruct-mlx
+  temperature: 0.3
+  max_tokens: 818
+
+Status Code: 400
+Tempo de resposta: 23.67s
+
+❌ ERRO HTTP: 400
+Resposta: {"error":"Model unloaded."}
+
+================================================================================
+FIM DO RELATÓRIO
+================================================================================
